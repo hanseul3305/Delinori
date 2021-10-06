@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.noriteo.delinori.qna.mapper.QnaReplyMapper">
+    <insert id="insert">
+        insert into reply_qna (qno, replyer, qnaReply)
+        values (#{qno}, #{replyer}, #{qnaReply})
+    </insert>
+
+    <update id="replyUpdate">
+        update reply_saleboard set gno = rno where gno is null
+    </update>
+
+<!--    <select id="getList" resultType="com.noriteo.delinori.qna.qnadomain.QnaReplyply">-->
+<!--        select * from reply_qna where qno = #{qno} order by rno asc-->
+<!--    </select>-->
+
+    <select id="getListWithPaging" resultType="com.noriteo.delinori.qna.domain.QnaReply">
+        select * from reply_qna where qno = #{qno} order by rno asc limit #{pageRequestDTO.skip},#{pageRequestDTO.size}
+    </select>
+
+    <select id="getCountByQno" resultType="int">
+        select count(rno) from reply_qna where qno = #{qno}
+    </select>
+
+    <delete id="delete">
+        delete from reply_qna where rno = #{rno}
+    </delete>
+
+    <update id="update">
+        update reply_qna set qnaReply = #{qnaReply}, modDate = now() where rno = #{rno}
+    </update>
+
+</mapper>
