@@ -1,6 +1,6 @@
 package com.noriteo.delinori.qna.controller;
 
-import com.noriteo.delinori.common.dto.UploadResponseDTO;
+import com.noriteo.delinori.qna.dto.UploadResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +24,7 @@ public class QnaUploadController {
     @PostMapping("/qna/removeFile")
     public ResponseEntity<String> removeFile(@RequestBody Map<String, String> data) throws Exception {
 
-        File file = new File("C:\\upload" + File.separator + data.get("fileName"));
+        File file = new File("/Users/hanseul/upload" + File.separator + data.get("fileName"));
 
         boolean checkImage = Files.probeContentType(file.toPath()).startsWith("image");
 
@@ -41,7 +41,7 @@ public class QnaUploadController {
     @GetMapping("/qna/downFile")
     public ResponseEntity<byte[]> download(@RequestParam("file") String fileName) throws Exception {
 
-        File file = new File("C:\\upload" + File.separator + fileName);
+        File file = new File("/Users/hanseul/upload" + File.separator + fileName);
 
         String originalFileName = fileName.substring(fileName.indexOf("_") + 1);
 
@@ -61,7 +61,7 @@ public class QnaUploadController {
     @ResponseBody
     public ResponseEntity<byte[]> viewFile(@RequestParam("file") String fileName) throws Exception {//파라미터보낼 때는 파일 받을때는 변수 //타입 달라도 쓸 수 있게
 
-        File file = new File("C:\\upload" + File.separator + fileName);
+        File file = new File("/Users/hanseul/upload" + File.separator + fileName);
 
         log.info(file);
 
@@ -80,7 +80,7 @@ public class QnaUploadController {
     }
 
     @ResponseBody
-    @PostMapping("qna/upload")
+    @PostMapping("/qna/upload")
     public List<UploadResponseDTO> uploadPost(MultipartFile[] uploadFiles) {//jsp에서 append()에 사용한 이름 파라미터로 줘야함
 
         log.info("c uploadPost-----------------------------------");
@@ -107,7 +107,7 @@ public class QnaUploadController {
 
     private UploadResponseDTO uploadProcess(MultipartFile multipartFile) throws Exception {
 
-        String uploadPath = "C:\\upload";
+        String uploadPath = "/Users/hanseul/upload";
 
         String folderName = makeFolder(uploadPath); // 2021-09-07 //경로
 
@@ -162,3 +162,4 @@ public class QnaUploadController {
 
 
 }
+

@@ -5,17 +5,24 @@
 
 <mapper namespace="com.noriteo.delinori.qna.mapper.QnaReplyMapper">
     <insert id="insert">
-        insert into reply_qna (qno, replyer, qnaReply)
-        values (#{qno}, #{replyer}, #{qnaReply})
+        insert into reply_qna (qno, gno, reply, replyer)
+        values (#{qno},#{rno}, #{reply}, #{replyer})
+        <selectKey order="AFTER" resultType="long" keyProperty="rno">
+            select last_insert_id()
+        </selectKey>
     </insert>
 
     <update id="replyUpdate">
-        update reply_saleboard set gno = rno where gno is null
+        update reply_qna set gno = rno where gno is null
     </update>
 
 <!--    <select id="getList" resultType="com.noriteo.delinori.qna.qnadomain.QnaReplyply">-->
 <!--        select * from reply_qna where qno = #{qno} order by rno asc-->
 <!--    </select>-->
+
+<!--    <update id="replyUpdate">-->
+<!--        update reply_qna set gno = rno where gno is null-->
+<!--    </update>-->
 
     <select id="getListWithPaging" resultType="com.noriteo.delinori.qna.domain.QnaReply">
         select * from reply_qna where qno = #{qno} order by rno asc limit #{pageRequestDTO.skip},#{pageRequestDTO.size}

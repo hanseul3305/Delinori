@@ -350,7 +350,6 @@
     }, false)
 
 
-    //댓글 수정
     function modReply(rno) {
 
         const target = document.getElementById("modRpl" + rno)
@@ -385,6 +384,7 @@
         }, false)
 
     }
+    //댓글 수정
 
 
     //댓글 삭제

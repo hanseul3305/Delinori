@@ -2,8 +2,6 @@
 <!--헤더 붙여넣기( 앞으로 이거 긁어 쓰세요 ) -->
 <%@ include file="../includes/header.jsp" %>
 
-<%--<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>--%>
-
 <div class="container">
 
     <div class="card o-hidden border-0 shadow-lg my-5">
@@ -13,116 +11,166 @@
                 <div class="col-lg-12">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">READ</h1>
+                            <h1 class="h4 text-gray-900 mb-4">QNA READ</h1>
                         </div>
-                        <form id="form1">
-                            <input type="hidden" name="page" value="${pageRequestDTO.page}">
-                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
+                        <input type="hidden" name="page" value="${pageRequestDTO.page}">
+                        <input type="hidden" name="size" value="${pageRequestDTO.size}">
 
-                            <div class="form-group">
-                                <label for="title">QNO</label>
-                                <input type="text" name="qno" class="form-control form-control-user" id="qno" value="<c:out value="${qnaDTO.qno}"></c:out>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="title">TITLE</label>
-                                <input type="text" name="title" class="form-control form-control-user" id="title" value="<c:out value="${qnaDTO.title}"></c:out>" readonly>
-                            </div>
-                            <label for="title">WRITER</label>
-                            <div class="form-group">
-                                <input type="text" name="writer" class="form-control form-control-user" id="writer" value="<c:out value="${qnaDTO.writer}"></c:out>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>CONTENT</label>
-                                <textarea name="content" class="form-control form-control-user" id="content" disabled><c:out value="${qnaDTO.content}"></c:out>
-                                </textarea>
-                            </div>
-                            <hr>
-                            <div>
-                                <button type="button" class="btn btn-info btnList">LIST</button>
-                                <button type="button" class="btn btn-info btnDel">DELETE</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <hr>
-
-                    <div class="p-4 row">
-                        <c:forEach items="${qnaDTO.files}" var="attach">
-                            <div class="col-sm-2">
-                                <div>
-                                    <c:if test="${attach.image}">
-                                        <img onclick="javascript:showOrigin('${attach.getFileLink()}')" src="/qna/viewFile?file=${attach.getThumbnail()}">
-                                    </c:if>
-                                </div>
-                                    ${attach.fileName}
-                            </div>
-                        </c:forEach>
-                    </div>
-
-                    <hr>
-                    <!-- 댓글 -->
-                    <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="qnaReply">
-
+                        <c:if test="${pageRequestDTO.type != null}">
+                            <input type="hidden" name="type" value="${pageRequestDTO.type}">
+                            <input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">
+                        </c:if>
+                        <label for="title">Qno</label>
+                        <div class="form-group">
+                            <input type="text" name="qno" class="form-control form-control-user" id="qno"
+                                   value="<c:out value="${qnaDTO.qno}"></c:out>"
+                                   placeholder="qno" readonly>
                         </div>
-                        <div class="reply-page">
-
+                        <label for="title">Title</label>
+                        <div class="form-group">
+                            <input type="text" name="title" class="form-control form-control-user" id="title"
+                                   value="<c:out value="${qnaDTO.title}"></c:out>"
+                                   placeholder="title" readonly>
                         </div>
-                    </div>
+                        <label for="writer">Writer</label>
+                        <div class="form-group">
+                            <input type="text" name="writer" class="form-control form-control-user" id="writer"
+                                   value="<c:out value="${qnaDTO.writer}"></c:out>"
+                                   placeholder="writer" readonly>
+                        </div>
+                        <label for="content">Content</label>
+                        <div class="form-group">
+                                <textarea name="content" class="form-control form-control-user" id="content"
+                                          disabled><c:out value="${qnaDTO.content}"></c:out></textarea>
+                        </div>
 
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">REPLY</h6>
-                    </div>
-                    <!-- 댓글작성 -->
-                    <div id="qnaReply-write" class="card o-hidden border-0 shadow-none my-5">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="form-group">
-                                        <label for="title">작성자</label>
-                                        <input type="text" name="replyer" class="form-control form-control-user" id="replyer">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="title">댓글</label>
-                                        <input type="text" name="qnaReply" class="form-control form-control-user" id="qnaReply">
-                                    </div>
-                                    <hr>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary operBtn" type="button">작성</button>
-                                    </div>
-                                </div>
+                        <!-- 파일목록 -->
+                        <div class="m-5 upload-list-box form-inline">
+                            <span class="fas fa-caret-left fa-5x text-gray-300 prev"></span>
+                            <div class="slide-wrapper">
+                                <ul class="slides">
+                                    <c:forEach items="${qnaDTO.files}" var="attach">
+                                        <c:if test="${attach.image}">
+                                            <li><img class="image"
+                                                     onclick="javascript:showOrigin('${attach.getFileLink()}')"
+                                                     src="/qna/viewFile?file=${attach.getThumbnail()}"></li>
+                                        </c:if>
+                                    </c:forEach>
+                                </ul>
                             </div>
+                            <span class="fas fa-caret-right fa-5x text-gray-300 next"></span>
+                        </div>
+
+                        <style>
+                            li {
+                                list-style: none;
+                            }
+
+                            .slide-wrapper {
+                                position: relative;
+                                width: 660px;
+                                margin: 0 auto;
+                                height: 200px;
+                                overflow: hidden;
+                            }
+
+                            .slides {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                            }
+
+                            .slides.animated {
+                                transition: 0.5s ease-out;
+                            }
+
+                            .slides li {
+                                width: 200px;
+                                height: 200px;
+                                float: left;
+                            }
+
+                            .image {
+                                width: 200px;
+                                height: 200px;
+                                object-fit: fill;
+                            }
+
+                            .slides li:not(:last-child) {
+                                margin-right: 30px;
+                            }
+
+                        </style>
+                        <!-- 파일목록 END -->
+
+                        <div class="form-inline justify-content-end">
+                            <button type="button" class="btn btn-primary ml-2 btnList">LIST</button>
+                            <button type="button" class="btn btn-success ml-2 btnMod">MODIFY</button>
+                            <button type="button" class="btn btn-danger ml-2 btnDel">DELETE</button>
+                        </div>
+
+                        <hr/>
+
+                        <!-- 댓글 -->
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">REPLY</h6>
                         </div>
                         <div>
+                            <div class="reply">
+
+                            </div>
                         </div>
+                        <!-- 댓글 페이징 -->
+                        <div class = "reply-paging">
+
+                        </div>
+                        <!-- 댓글 페이징 END -->
+
+                        <!-- 댓글작성 -->
+                        <div id="reply-write" class="form-inline justify-content-center mt-2">
+                            <div class="reply-content">
+                                <input type="text" class="form-control bg-light border-0"
+                                       placeholder="작성자"
+                                       aria-label="replyer" aria-describedby="basic-addon2"
+                                       name="replyer">
+                                <input type="text" class="form-control bg-light border-0"
+                                       placeholder="댓글을 입력해주세요"
+                                       aria-label="reply" aria-describedby="basic-addon2"
+                                       name="reply">
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary operBtn" type="button">
+                                    작성
+                                </button>
+                            </div>
+                        </div>
+                        <!-- 댓글 END -->
+
                     </div>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modal-sm">
-    <div class="modal-dialog modal-sm">
+<!-- Image Modal-->
+<div class="modal fade" id="modal-image" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">댓글 수정</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="rno">
-                <input type="text" name="replyMod">
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-primary btnModReply">수정하기</button>
+                <img id="targetImage">
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
 </div>
+<!-- Image Modal End -->
 
 <form id="actionForm" action="/qna/list" method="get">
     <input type="hidden" name="page" value="${pageRequestDTO.page}">
@@ -134,107 +182,148 @@
     </c:if>
 </form>
 
-
 <form id="actionReply" action="/replies/list/{qno}/{page}" method="get">
     <input type="hidden" name="page" value="${pageMaker.page}">
     <input type="hidden" name="size" value="${pageMaker.size}">
 </form>
 
-<div id="modal-imge" class="modal">
-    <span class="close">&times X &times</span>
-    <img class="modal-content" id="targetImage">
-    <div id="caption"></div>
-</div>
-
-
+<!--푸터 붙여넣기( 앞으로 이거 긁어 쓰세요 ) -->
 <%@ include file="../includes/footer.jsp" %>
 
 <script>
+
     const actionForm = document.querySelector("#actionForm")
-    const form = document.querySelector("#form1")
     const actionReply = document.querySelector("#actionReply")
 
-    document.querySelector(".btnList").addEventListener("click", ()=>{actionForm.submit()},false)
+    document.querySelector(".btnList").addEventListener("click", () => {
+        actionForm.submit()
+    }, false)
 
-    document.querySelector(".btnDel").addEventListener("click", (e)=>{
-        e.preventDefault()
-        e.stopPropagation()
+    document.querySelector(".btnMod").addEventListener("click", () => {
 
-        form.setAttribute("action","/qna/remove")
-        form.setAttribute("method","post")
-        form.submit()
+        const qno = '${qnaDTO.qno}'
 
-    },false)
+        actionForm.setAttribute("action", "/qna/modify")
+        actionForm.innerHTML += `<input type='hidden' name='qno' value='\${qno}'>`
+        actionForm.submit()
+
+    }, false)
+
+    document.querySelector(".btnDel").addEventListener("click", (e) => {
+
+        const qno = '${qnaDTO.qno}'
+
+        actionForm.setAttribute("action", "/qna/remove")
+        actionForm.innerHTML += `<input type='hidden' name='qno' value='\${qno}'>`
+        actionForm.submit()
+
+    }, false)
 
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/resources/js/qna-reply.js"></script>
+<script src="/resources/js/saleboard-reply.js"></script>
+<script src="/resources/js/img-list.js"></script>
 
 <script>
 
-    const modalImage = new bootstrap.Modal(document.querySelector("#modal-imge"))
+    //이미지 모달
+    const modalImage = new bootstrap.Modal(document.querySelector('#modal-image'))
 
+    function showOrigin(fileLink) {
 
-    function showOrigin(fileLink){
-        document.querySelector("#targetImage").src = `/qna/viewFile?file=\${fileLink}`
+        //alert(fileLink)
+        document.querySelector("#targetImage").src = `/qna/viewFile?file=\${fileLink}` //src 실시간으로 받는게 더 빠름
         modalImage.show()
+
     }
 
+
+    //댓글
     function getList() {
 
-        const target = document.querySelector(".qnaReply")
+        const target = document.querySelector(".reply")
         const qno = '${qnaDTO.qno}'
+        console.log(qno)
 
         function convertTemp(replyObj) {
 
-            const {rno, sno, reply, replyer, replyDate, modDate} = {...replyObj}
+            const {rno, qno, reply, replyer, replyDate, modDate, gno} = {...replyObj}
 
-            const temp = `<div class="card mb-4 py-2 border-left-primary shadow">
-                          <div class="col-auto " align="right">
-                          <a class="fas fa-tools fa-1x text-gray-300 m-1 ModRno" href="javascript:ModReply(\${rno})" data-rno='\${rno}' data-qnaReply='\${reply}'></a>
-                          <a class="fas fa-trash fa-1x text-gray-300 m-1" href="javascript:delReply(\${rno})" data-rno='\${rno}'></a></div>
-                          <div class="ml-4 mb-3">
-                          <div class="row no-gutters align-items-start">
-                          <div class="col mr-2">
-                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          \${rno}--\${replyer}</div>
-                          <div class="mod">
-                          <div class="h5 mb-0 font-weight-bold text-gray-800" data-replyer='\${replyer}' data-rno='\${rno}'>
-                          \${reply}</div>
-                          <div class="text-xs font-weight-light text-secondary text-uppercase mb-1">
-                          \${replyDate}</div>
-                          </div>
-                          </div></div>
-                        </div></div>`
+            const originReply = `<div class="origin-reply-card mb-2 mt-1" data-rno='\${rno}'>
+                                        <div class="col-auto" align="right">
+                                            <a href="javascript:addReplyReply(\${rno})" class="fas fa-edit fa-sm text-gray-300 m-1"></a>
+                                            <a href="javascript:modReply(\${rno})" class="fas fa-tools fa-sm text-gray-300 m-1"></a>
+                                            <a href="javascript:deleteReply(\${rno})" class="fas fa-trash fa-sm text-gray-300 m-1" data-rno="\${rno}"></a>
+                                        </div>`
+
+            const reReply = `<div class="reply-reply-card ml-5 mb-2 mt-2" data-gno='\${gno}'>
+                                    <div class="col-auto " align="right">
+                                        <a href="javascript:addReReplyReply(\${gno}, \${rno})" class="fas fa-edit fa-sm text-gray-300 m-1"></a>
+                                        <a href="javascript:modReReply(\${gno})" class="fas fa-tools fa-sm text-gray-300 m-1"></a>
+                                        <a href="javascript:deleteReply(\${rno})" class="fas fa-trash fa-sm text-gray-300 m-1"></a>
+                                    </div>`
+
+            const step = rno === gno ? originReply : reReply
+
+            const temp = `\${step}
+                                <div class = form-inline>
+                                    <div class="profile-img btn btn-secondary btn-circle btn-lg">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <div class="reply-body ml-4 mb-3">
+                                        <div class="reply-content row no-gutters align-items-start">
+                                            <div class="reply-rno col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    \${rno}--\${replyer}
+                                                </div>
+                                                <div class="reply-mod" id="modRpl\${rno}">
+                                                    <div class="reply-content h5 mb-0 font-weight-bold text-gray-800" data-rno='\${rno}'
+                                                         data-replyer='\${replyer}'>
+                                                        \${reply}
+                                                    </div>
+                                                    <div class="reply-date text-xs font-weight-light text-secondary text-uppercase mb-1">
+                                                        \${replyDate}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="reply-reply" id="rpl\${rno}">
+                                </div>
+                                <hr class="mt-3 mb-0"/>`
 
             return temp
 
         }
 
-        getReplyList(qno,page).then(data => {
+        getReplyList(qno, page).then(data => {
 
             console.log(data)
             let str = ""
 
             var {dtoList, count} = data
 
-            dtoList.forEach(qnaReply =>{
-                str += convertTemp(qnaReply)
-            });
-
+            dtoList.forEach(reply => {
+                str += convertTemp(reply)
+            })
             target.innerHTML = str
 
             showReplyPage(count)
+
         })
     }
 
+
+    //댓글목록 뿌리기
     (function () {
         getList()
     })()
 
-    const replyDiv = document.querySelector("#qnaReply-write")
 
+    //댓글 등록
     let oper = null
 
     document.querySelector(".operBtn").addEventListener("click", function () {
@@ -243,65 +332,174 @@
 
         const qno = '${qnaDTO.qno}'
         const replyer = document.querySelector("input[name='replyer']").value
-        const qnaReply = document.querySelector("input[name='qnaReply']").value
+        const reply = document.querySelector("input[name='reply']").value
+        const gno = null
 
         if (oper === 'add') {
 
-            const replyObj = {qno, replyer, qnaReply}
+            const replyObj = {qno, replyer, reply, gno}
             console.log(replyObj)
 
             addReply(replyObj).then(result => {
                 getList()
                 document.querySelector("input[name='replyer']").value = ""
-                document.querySelector("input[name='qnaReply']").value = ""
+                document.querySelector("input[name='reply']").value = ""
             })
         }
 
     }, false)
 
-    const modModal = $("#modal-sm")
-    const modReply = document.querySelector("input[name='replyMod']")
-    const modRno = document.querySelector("input[name='rno']")
 
-    function ModReply(){
+    function modReply(rno) {
 
-        const rno = document.querySelector(".ModRno").getAttribute("data-rno")
-        const qnaReply = document.querySelector(".ModRno").getAttribute("data-qnaReply")
+        const target = document.getElementById("modRpl" + rno)
 
-        console.log(rno,qnaReply)
+        console.log(target)
 
-        modRno.value = rno
-        modReply.value = qnaReply
+        const modStr = `<div>
+                        <input type="text" class="form-control bg-light border-0 small"
+                             placeholder="수정할 댓글을 입력해주세요"
+                             aria-label="reply" aria-describedby="basic-addon2"
+                             name="replyMod">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary btnModReply" type="button">
+                              수정
+                          </button>
+                        </div></div>`
 
-        modModal.modal('show')
+        target.innerHTML = modStr
+
+        document.querySelector(".btnModReply").addEventListener("click", (e) => {
+
+            const modreply = document.querySelector("input[name='replyMod']").value
+
+            const replyObj = {rno: rno, reply: modreply}
+
+            console.log(replyObj)
+
+            modifyReply(replyObj).then(result => {
+                getList()
+            })
+
+        }, false)
+
     }
+    //댓글 수정
 
-    function delReply(rno) {
+
+    //댓글 삭제
+    function deleteReply(rno) {
 
         console.log(rno);
         removeReply(rno).then(result => {
             getList()
         })
+
     }
 
-    document.querySelector(".btnModReply").addEventListener("click", (e)=>{
-        const replyObj = {rno:modRno.value ,qnaReply:modReply.value }
 
+    //대댓글 입력
+    function addReplyReply(rno) {
+
+        console.log(rno);
+
+        const target = document.getElementById("rpl" + rno)
+
+        const str = `<div id="reply-reply-write" class="mt-1 mb-2 form-inline justify-content-center">
+                            <div class="reply-content">
+                                <input type="hidden" name="rno">
+                                <input type="text" class="form-control bg-light border-0"
+                                       placeholder="작성자"
+                                       aria-label="replyer" aria-describedby="basic-addon2"
+                                       name="replyer">
+                                <input type="text" class="form-control bg-light border-0"
+                                       placeholder="대댓글을 입력해주세요"
+                                       aria-label="reply" aria-describedby="basic-addon2"
+                                       name="reply">
+                            </div>
+                            <div class="input-group-append">
+                                <a href="javascript:regReply(\${rno})" class="btn btn-primary rplBtn" type="button">
+                                    작성
+                                </a>
+                            </div>
+                        <hr/>
+                        </div>`
+
+        target.innerHTML = str
+
+    }
+
+    //대댓글 등록
+    function regReply(rno) {
+
+        const qno = '${qnaDTO.qno}'
+        const replyer = document.querySelector("input[name='replyer']").value
+        const reply = document.querySelector("input[name='reply']").value
+
+        const replyObj = {qno, replyer, reply, rno}
         console.log(replyObj)
 
-        modifyReply(replyObj).then(result=> {
+        addReply(replyObj).then(result => {
             getList()
-            modModal.modal("hide")
+            document.querySelector("input[name='replyer']").value = ""
+            document.querySelector("input[name='reply']").value = ""
         })
-        },false)
 
-    function movePage(pageNum){
-        actionReply.querySelector("input[name='page']").setAttribute("value",pageNum)
-        actionReply.submit()
     }
 
+    //대대댓글(인척) 입력
+    function addReReplyReply(gno, rno) {
+
+        console.log(gno);
+
+        const target = document.getElementById("rpl" + rno)
+
+        const str = `<div id="reply-reply-write" class="mt-1 mb-2 form-inline justify-content-center">
+                            <div class="reply-content">
+                                <input type="hidden" name="gno">
+                                <input type="text" class="form-control bg-light border-0"
+                                       placeholder="작성자"
+                                       aria-label="replyer" aria-describedby="basic-addon2"
+                                       name="replyer">
+                                <input type="text" class="form-control bg-light border-0"
+                                       placeholder="대댓글을 입력해주세요"
+                                       aria-label="reply" aria-describedby="basic-addon2"
+                                       name="reply">
+                            </div>
+                            <div class="input-group-append">
+                                <a href="javascript:regReply(\${gno})" class="btn btn-primary rplBtn" type="button">
+                                    작성
+                                </a>
+                            </div>
+                        <hr/>
+                        </div>`
+
+        target.innerHTML = str
+
+    }
+
+    //대대댓글(인척) 등록
+    function regReply(gno) {
+
+        const qno = '${qnaDTO.qno}'
+        const replyer = document.querySelector("input[name='replyer']").value
+        const reply = document.querySelector("input[name='reply']").value
+        const rno = gno
+
+        const replyObj = {qno, replyer, reply, rno}
+        console.log(replyObj)
+
+        addReply(replyObj).then(result => {
+            getList()
+            document.querySelector("input[name='replyer']").value = ""
+            document.querySelector("input[name='reply']").value = ""
+        })
+
+    }
+
+    //댓글 페이징
     var page = 1;
-    const replyPaging = $(".reply-page")
+    const replyPaging = $(".reply-paging")
 
     function showReplyPage(count){
         var endNum = Math.ceil(page/10.0) * 10
@@ -350,6 +548,7 @@
 
         getList()
     })
+
 
 </script>
 

@@ -11,8 +11,6 @@ public interface QnaReplyMapper {
 
     int insert(QnaReply qnaReply);
 
-//    List<QnaReply> getList(Long qno);
-
     List<QnaReply> getListWithPaging(
             @Param("pageRequestDTO") PageRequestDTO pageRequestDTO,
             @Param("qno") Long qno);
@@ -22,4 +20,6 @@ public interface QnaReplyMapper {
     int update(QnaReply qnaReply);
 
     int getCountByQno(Long qno);
+
+    int replyUpdate(QnaReply qnaReply);
 }

@@ -10,10 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Log4j2
-@RestController
+@RestController //@ResponseBody
 @RequestMapping("/qna/replies")
 @RequiredArgsConstructor
 public class QnaReplyController {
@@ -21,19 +19,42 @@ public class QnaReplyController {
     private final QnaReplyService qnaReplyService;
 
     @PostMapping("")
-    public int add(@RequestBody QnaReplyDTO qnaReplyDTO){
+    public int add(@RequestBody QnaReplyDTO qnaReplyDTO) {
 
-        log.info("==========c reply add===========");
+        log.info("c replyAdd==============================");
         log.info(qnaReplyDTO);
 
         return qnaReplyService.add(qnaReplyDTO);
+
     }
 
+    @DeleteMapping("/{rno}")
+    public String remove(@PathVariable(name = "rno") Long rno) {
+        log.info("-----------reply remove-----------");
 
-    @GetMapping(value = "/list/{qno}/{page}" , produces = "application/json")
-    public ResponseEntity<PageResponseDTO> getList(@PathVariable(name = "qno") Long qno , @PathVariable(name="page") int page){
+        log.info("rno : " + rno);
 
-        log.info("===================c  getQnaReplies================");
+        qnaReplyService.remove(rno);
+
+        return "success";
+    }
+
+    @PutMapping("/{rno}")
+    public String modify(@PathVariable(name = "rno") Long rno, @RequestBody QnaReplyDTO qnaReplyDTO) {
+
+        log.info("----------reply modify------------");
+        log.info(qnaReplyDTO);
+
+        qnaReplyService.modify(qnaReplyDTO);
+
+        return "success";
+
+    }
+
+    @GetMapping(value = "/list/{qno}/{page}", produces = "application/json")
+    public ResponseEntity<PageResponseDTO> getList (
+            @PathVariable("page") int page,
+            @PathVariable("qno") Long qno) {
 
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(page)
@@ -45,25 +66,8 @@ public class QnaReplyController {
         log.info("pageRequestDTO : " + pageRequestDTO);
 
         return new ResponseEntity<>(qnaReplyService.getRepliesList(pageRequestDTO, qno), HttpStatus.OK);
+
+
     }
 
-    @DeleteMapping("/{rno}")
-    public String remove(@PathVariable(name = "rno") Long rno){
-        log.info("========c        replyRemove========");
-        log.info(rno);
-
-        qnaReplyService.remove(rno);
-
-        return "success";
-    }
-
-    @PutMapping("/{rno}")
-    public String modify(@PathVariable(name="rno") Long rno, @RequestBody QnaReplyDTO qnaReplyDTO){
-        log.info("========c        replyModify========" + rno);
-        log.info(qnaReplyDTO);
-
-        qnaReplyService.modify(qnaReplyDTO);
-
-        return "sucess";
-    }
 }

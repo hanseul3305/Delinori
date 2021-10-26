@@ -6,7 +6,6 @@ import com.noriteo.delinori.qna.domain.QnaReply;
 import com.noriteo.delinori.qna.dto.QnaReplyDTO;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 public interface QnaReplyService {
 
     int add(QnaReplyDTO qnaReplyDTO);
