@@ -1,17 +1,13 @@
 package com.noriteo.delinori.qna.service;
 
 import com.noriteo.delinori.common.dto.PageRequestDTO;
-import com.noriteo.delinori.common.dto.PageResponseDTO;
+import com.noriteo.delinori.common.dto.ReplyResponseDTO;
 import com.noriteo.delinori.qna.dto.QnaReplyDTO;
 import com.noriteo.delinori.qna.mapper.QnaMapper;
 import com.noriteo.delinori.qna.mapper.QnaReplyMapper;
-import com.noriteo.delinori.saleboard.dto.SaleBoardReplyDTO;
-import com.noriteo.delinori.saleboard.mapper.SaleBoardMapper;
-import com.noriteo.delinori.saleboard.mapper.SaleBoardReplyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,39 +21,27 @@ public class QnaReplyServiceImpl implements QnaReplyService {
     private final QnaMapper qnaMapper;
 
     @Override
-    @Transactional
     public int add(QnaReplyDTO qnaReplyDTO) {
-
         int count = qnaReplyMapper.insert(dtoToEntity(qnaReplyDTO));
-        qnaMapper.updateReplyCnt(qnaReplyDTO.getQno(), 1);
-
-        addGno(qnaReplyDTO);
+        qnaMapper.updateReplyCnt(qnaReplyDTO.getQno(),1);
 
         return count;
     }
 
     @Override
-    public int addGno(QnaReplyDTO qnaReplyDTO) {
-        return qnaReplyMapper.replyUpdate(dtoToEntity(qnaReplyDTO));
+    public List<QnaReplyDTO> getRepliesWithQno(Long qno) {
+        return qnaReplyMapper.getListWithQna(qno, PageRequestDTO.builder().build()).stream()
+                .map(reply -> entityToDTO(reply))
+                .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<SaleBoardReplyDTO> getRepliesWithSno(Long sno) {
-//        return saleBoardReplyMapper.getListWithBoard(sno).stream().map(reply -> entityToDTO(reply)).collect(Collectors.toList());
-//    }
-
     @Override
-    public PageResponseDTO<QnaReplyDTO> getRepliesList(PageRequestDTO pageRequestDTO, Long qno) {
+    public ReplyResponseDTO getRepliesPage(PageRequestDTO pageRequestDTO, Long qno) {
 
-        List<QnaReplyDTO> dtoList = qnaReplyMapper.getListWithPaging(pageRequestDTO, qno).stream().map(qnaReply -> entityToDTO(qnaReply)).collect(Collectors.toList());
-        int count = qnaReplyMapper.getCountByQno(qno);
-
-        PageResponseDTO<QnaReplyDTO> pageResponseDTO = PageResponseDTO.<QnaReplyDTO>builder()
-                .dtoList(dtoList)
-                .count(count)
-                .build();
-
-        return pageResponseDTO;
+        return new ReplyResponseDTO(
+                qnaReplyMapper.getCountReplies(qno),
+                qnaReplyMapper.getListWithQna(qno,pageRequestDTO)
+        );
     }
 
     @Override
@@ -69,6 +53,4 @@ public class QnaReplyServiceImpl implements QnaReplyService {
     public int modify(QnaReplyDTO qnaReplyDTO) {
         return qnaReplyMapper.update(dtoToEntity(qnaReplyDTO));
     }
-
-
 }

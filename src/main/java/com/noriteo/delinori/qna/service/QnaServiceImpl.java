@@ -36,8 +36,7 @@ public class QnaServiceImpl implements QnaService{
     }
 
     @Override
-    public  PageResponseDTO<QnaDTO> getDTOList(PageRequestDTO pageRequestDTO) {
-
+    public PageResponseDTO<QnaDTO> getDTOList(PageRequestDTO pageRequestDTO) {
         List<QnaDTO> dtoList = qnaMapper.getList(pageRequestDTO).stream().map(qna -> qna.getDTO()).collect(Collectors.toList());
         int count = qnaMapper.getCount(pageRequestDTO);
 
@@ -55,10 +54,7 @@ public class QnaServiceImpl implements QnaService{
 
         log.info("read service====================================");
 
-        if(qna != null) {
-            return qna.getDTO();
-        }
-        return null;
+        return qna!= null ? qna.getDTO(): null;
     }
 
     @Override

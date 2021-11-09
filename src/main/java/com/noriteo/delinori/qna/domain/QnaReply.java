@@ -16,5 +16,4 @@ public class QnaReply {
     private String reply;
     private LocalDateTime replyDate;
     private LocalDateTime modDate;
-    private Long gno;
 }

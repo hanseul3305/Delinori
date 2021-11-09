@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface QnaService {
-
     Long register(QnaDTO qnaDTO);
 
     PageResponseDTO<QnaDTO> getDTOList(PageRequestDTO pageRequestDTO);

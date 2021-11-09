@@ -23,4 +23,6 @@ public interface QnaMapper {
 
     int insertAttach(QnaAttach attach);
 
+    int deleteAttach(Long qno);
+
 }

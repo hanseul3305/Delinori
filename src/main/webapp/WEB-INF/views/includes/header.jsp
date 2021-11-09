@@ -67,7 +67,7 @@
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
          aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-folder"></i>
-        <span>회원 정보 관리</span>
+        <span>회원정보관리</span>
       </a>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
@@ -236,7 +236,7 @@
                 </div>
                 <div>
                   <div class="small text-gray-500">10분 전</div>
-                  통계 자료가 업데이트되었습니다.
+                  통계 자료가 업데이트 되었습니다.
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
@@ -247,10 +247,10 @@
                 </div>
                 <div>
                   <div class="small text-gray-500">2021.09.29</div>
-                  인증되지 않은 사용자의 접근이 감지되었습니다.
+                  인증 되지 않은 사용자의 접근이 감지 되었습니다.
                 </div>
               </a>
-              <a class="dropdown-item text-center small text-gray-500" href="#">알림 더 보기</a>
+              <a class="dropdown-item text-center small text-gray-500" href="#">알림 더보기</a>
             </div>
           </li>
 
@@ -266,39 +266,39 @@
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="messagesDropdown">
               <h6 class="dropdown-header">
-                메세지
+                Message Center
               </h6>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="/resources/img/undraw_profile_1.svg"
+                  <img class="rounded-circle" src="img/undraw_profile_1.svg"
                        alt="...">
                   <div class="status-indicator bg-success"></div>
                 </div>
                 <div class="font-weight-bold">
-                  <div class="text-truncate">인사팀에서 알립니다. 내일까지 통장 사본을 제출해 주시기 바랍니다.</div>
-                  <div class="small text-gray-500">김영희 · 13분 전</div>
+                  <div class="text-truncate">마스크로 답답하지만, 마음만은 상쾌한 한 주 보내시길 바랍니다.</div>
+                  <div class="small text-gray-500">Emily Fowler · 58m</div>
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="/resources/img/undraw_profile_2.svg"
+                  <img class="rounded-circle" src="img/undraw_profile_2.svg"
                        alt="...">
                   <div class="status-indicator"></div>
                 </div>
                 <div>
-                  <div class="text-truncate">내일 오후 2시에 팀 전체 회의가 있습니다. 잊지 말고 참석해 주세요.</div>
-                  <div class="small text-gray-500">정고범 · 37분 전</div>
+                  <div class="text-truncate">딜리노리 관리자님! 오늘기준 회원이 1,0000명이 되었습니다.</div>
+                  <div class="small text-gray-500">Jae Chun · 1d</div>
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="/resources/img/undraw_profile_3.svg"
+                  <img class="rounded-circle" src="img/undraw_profile_3.svg"
                        alt="...">
                   <div class="status-indicator bg-warning"></div>
                 </div>
                 <div>
-                  <div class="text-truncate">다은 씨, 지난 번 회의 자료 좀 보여 주실 수 있나요?</div>
-                  <div class="small text-gray-500">박해인 · 58분 전</div>
+                  <div class="text-truncate">딜리노리 관리자님! 금일 조회된 거래건수는 729건 입니다!</div>
+                  <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                 </div>
               </a>
               <a class="dropdown-item d-flex align-items-center" href="#">
@@ -308,11 +308,11 @@
                   <div class="status-indicator bg-success"></div>
                 </div>
                 <div>
-                  <div class="text-truncate">오늘 점심 뭐 먹을까요?</div>
-                  <div class="small text-gray-500">차민아 · 1시간 전</div>
+                  <div class="text-truncate">더운 여름도 가고 이제 날씨가 점점 시원해지고 있네요, 가을 같이 좋은 하루 보내시길 바랄게요.</div>
+                  <div class="small text-gray-500">Chisken the Dog · 2w</div>
                 </div>
               </a>
-              <a class="dropdown-item text-center small text-gray-500" href="#">메세지 더 보기</a>
+              <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
             </div>
           </li>
 

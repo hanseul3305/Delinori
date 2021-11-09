@@ -24,7 +24,7 @@ public class SaleBoardUploadController {
     @PostMapping("/saleboard/removeFile")
     public ResponseEntity<String> removeFile(@RequestBody Map<String, String> data) throws Exception {
 
-        File file = new File("C:\\upload" + File.separator + data.get("fileName"));
+        File file = new File("/Users/hanseul/upload" + File.separator + data.get("fileName"));
 
         boolean checkImage = Files.probeContentType(file.toPath()).startsWith("image");
 
@@ -41,7 +41,7 @@ public class SaleBoardUploadController {
     @GetMapping("/saleboard/downFile")
     public ResponseEntity<byte[]> download(@RequestParam("file") String fileName) throws Exception {
 
-        File file = new File("C:\\upload" + File.separator + fileName);
+        File file = new File("/Users/hanseul/upload" + File.separator + fileName);
 
         String originalFileName = fileName.substring(fileName.indexOf("_") + 1);
 
@@ -61,7 +61,7 @@ public class SaleBoardUploadController {
     @ResponseBody
     public ResponseEntity<byte[]> viewFile(@RequestParam("file") String fileName) throws Exception {//파라미터보낼 때는 파일 받을때는 변수 //타입 달라도 쓸 수 있게
 
-        File file = new File("C:\\upload" + File.separator + fileName);
+        File file = new File("/Users/hanseul/upload" + File.separator + fileName);
 
         log.info(file);
 
@@ -107,7 +107,7 @@ public class SaleBoardUploadController {
 
     private UploadResponseDTO uploadProcess(MultipartFile multipartFile) throws Exception {
 
-        String uploadPath = "C:\\upload";
+        String uploadPath = "/Users/hanseul/upload";
 
         String folderName = makeFolder(uploadPath); // 2021-09-07 //경로
 

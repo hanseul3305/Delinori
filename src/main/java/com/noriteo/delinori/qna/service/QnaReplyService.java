@@ -1,24 +1,25 @@
 package com.noriteo.delinori.qna.service;
 
 import com.noriteo.delinori.common.dto.PageRequestDTO;
-import com.noriteo.delinori.common.dto.PageResponseDTO;
+import com.noriteo.delinori.common.dto.ReplyResponseDTO;
 import com.noriteo.delinori.qna.domain.QnaReply;
 import com.noriteo.delinori.qna.dto.QnaReplyDTO;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Transactional
 public interface QnaReplyService {
 
     int add(QnaReplyDTO qnaReplyDTO);
 
-    int addGno(QnaReplyDTO qnaReplyDTO);
-
-//    List<QnaReplyDTO> getRepliesWithQno(Long qno);
+    List<QnaReplyDTO> getRepliesWithQno(Long qno);
 
     int remove(Long rno);
 
     int modify(QnaReplyDTO qnaReplyDTO);
 
-    PageResponseDTO<QnaReplyDTO> getRepliesList(PageRequestDTO pageRequestDTO, Long qno);
+    ReplyResponseDTO getRepliesPage(PageRequestDTO pageRequestDTO, Long qno);
 
     default QnaReply dtoToEntity(QnaReplyDTO dto){
 
@@ -29,7 +30,6 @@ public interface QnaReplyService {
                 .replyer(dto.getReplyer())
                 .replyDate(dto.getReplyDate())
                 .modDate(dto.getModDate())
-                .gno(dto.getGno())
                 .build();
 
         return qnaReply;
@@ -43,7 +43,6 @@ public interface QnaReplyService {
                 .replyer(qnaReply.getReplyer())
                 .replyDate(qnaReply.getReplyDate())
                 .modDate(qnaReply.getModDate())
-                .gno(qnaReply.getGno())
                 .build();
 
         return qnaReplyDTO;

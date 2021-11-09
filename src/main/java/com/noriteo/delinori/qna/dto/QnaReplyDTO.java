@@ -18,7 +18,6 @@ public class QnaReplyDTO {
     private Long qno;
     private String replyer;
     private String reply;
-    private Long gno;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime replyDate;

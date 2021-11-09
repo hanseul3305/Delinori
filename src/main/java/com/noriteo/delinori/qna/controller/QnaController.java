@@ -23,7 +23,6 @@ public class QnaController {
 
     private final QnaService qnaService;
 
-//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/register")
     public void getRegister(){
 

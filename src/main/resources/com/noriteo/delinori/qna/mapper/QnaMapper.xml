@@ -40,14 +40,6 @@
         <include refid="search"></include>
     </select>
 
-    <delete id="delete">
-        delete from qna where qno=#{qno}
-    </delete>
-
-    <update id="updateReplyCnt">
-        update qna set replyCnt = replyCnt + #{num} where qno = #{qno}
-    </update>
-
     <resultMap id="qnaMap" type="com.noriteo.delinori.qna.domain.Qna">
         <id property="qno" column="qno"></id>
         <result property="title" column="title"></result>
@@ -68,16 +60,27 @@
         <result property="image" column="image"></result>
     </resultMap>
 
-    <select id="select" resultMap="qnaMap">
+    <select id="select" resultType="com.noriteo.delinori.qna.domain.Qna">
         select *
-        from
-             qna q left join attach_qna qa on q.qno = qa.qno
-        where q.qno=#{qno}
+        from qna
+--             qn left join attach_qna atqn on qn.qno = atqn.qno
+--         where qn.qno=#{qno}
     </select>
+
+    <delete id="delete">
+        delete from qna where qno=#{qno}
+    </delete>
+
+    <update id="updateReplyCnt">
+        update qna set replyCnt = replyCnt + #{num} where qno = #{qno}
+    </update>
 
     <insert id="insertAttach">
         insert into attach_qna (uuid,qno,fileName,path,image)
         values (#{uuid}, #{qno}, #{fileName}, #{path}, #{image})
     </insert>
 
+    <delete id="deleteAttach">
+        delete from attach_qna where qno = #{qno}
+    </delete>
  </mapper>

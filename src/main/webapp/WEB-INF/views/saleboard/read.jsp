@@ -182,7 +182,7 @@
     </c:if>
 </form>
 
-<form id="actionReply" action="/replies/list/{qno}/{page}" method="get">
+<form id="actionReply" action="/replies/list/{sno}/{page}" method="get">
     <input type="hidden" name="page" value="${pageMaker.page}">
     <input type="hidden" name="size" value="${pageMaker.size}">
 </form>
@@ -350,6 +350,7 @@
     }, false)
 
 
+    //댓글 수정
     function modReply(rno) {
 
         const target = document.getElementById("modRpl" + rno)
@@ -384,7 +385,6 @@
         }, false)
 
     }
-    //댓글 수정
 
 
     //댓글 삭제
